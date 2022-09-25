@@ -26,7 +26,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/plus_jakarta_sans_medium"
-            android:textColor="#525252"
+            android:textColor="@color/coin_name"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/plus_jakarta_sans_regular"
-            android:textColor="#9B9B9B"
+            android:textColor="@color/coin_symbol"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image"
@@ -51,7 +51,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="@font/plus_jakarta_sans_semibold"
-            android:textColor="#525252"
+            android:textColor="@color/coin_name"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

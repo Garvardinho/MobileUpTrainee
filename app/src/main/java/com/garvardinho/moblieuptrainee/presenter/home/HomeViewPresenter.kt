@@ -24,7 +24,7 @@ class HomeViewPresenter : MvpPresenter<HomeView>(), HomeViewDelegate {
     }
 
     override fun loadCoins(currency: String) {
-        viewState.showLoading(true)
+        viewState.showLoading()
         repository.loadCoins(currency)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { coins ->

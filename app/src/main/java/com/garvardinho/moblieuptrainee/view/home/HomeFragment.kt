@@ -47,17 +47,6 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         return binding.root
     }
 
-    override fun showCoins(coins: List<CoinDTO>) {
-        binding.coinList.layoutManager = LinearLayoutManager(requireContext())
-        binding.coinList.adapter = homeCoinsAdapter
-
-        homeCoinsAdapter.setOnCoinClickListener(object : MobileUpItemClickListener {
-            override fun setListener(v: View, position: Int) {
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val chipUSD = binding.toolbar.usdChip
@@ -84,7 +73,23 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         }
     }
 
-    override fun showLoading(loading: Boolean) {
+    override fun showCoins(coins: List<CoinDTO>) {
+        binding.coinList.visibility = View.VISIBLE
+        binding.loadingBar.visibility = View.INVISIBLE
+
+        binding.coinList.layoutManager = LinearLayoutManager(requireContext())
+        binding.coinList.adapter = homeCoinsAdapter
+
+        homeCoinsAdapter.setOnCoinClickListener(object : MobileUpItemClickListener {
+            override fun setListener(v: View, position: Int) {
+                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    override fun showLoading() {
+        binding.coinList.visibility = View.INVISIBLE
+        binding.loadingBar.visibility = View.VISIBLE
     }
 
     override fun showError() {
