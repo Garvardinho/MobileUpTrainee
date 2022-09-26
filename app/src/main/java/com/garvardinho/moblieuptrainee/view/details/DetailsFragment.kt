@@ -8,6 +8,7 @@ import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
 import com.garvardinho.moblieuptrainee.App
 import com.garvardinho.moblieuptrainee.databinding.FragmentDetailsBinding
 import com.garvardinho.moblieuptrainee.model.retrofit.CoinDTO
@@ -44,8 +45,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
             else
                 @Suppress("DEPRECATION") it.getParcelable(KEY_PARAM)
 
-            val id = coin.id
-            presenter.loadDetails(id.orEmpty())
+            presenter.loadDetails(coin.id.orEmpty())
         }
         return binding.root
     }
@@ -56,11 +56,17 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
         binding.toolbar.backButton.setOnClickListener {
             presenter.onBackPressed()
         }
+
+        binding.errorView.errorButton.setOnClickListener {
+            presenter.loadDetails(coin.id.orEmpty())
+        }
     }
 
     override fun showDetails(details: CoinDetailsDTO) {
         binding.contentGroup.visibility = View.VISIBLE
         binding.loadingBar.visibility = View.INVISIBLE
+        for (child in binding.errorView.root.children)
+            child.visibility = View.INVISIBLE
         binding.toolbar.title.text = coin.name
         Picasso
             .get()
@@ -78,10 +84,15 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
     override fun showLoading() {
         binding.contentGroup.visibility = View.INVISIBLE
         binding.loadingBar.visibility = View.VISIBLE
+        for (child in binding.errorView.root.children)
+            child.visibility = View.INVISIBLE
     }
 
     override fun showError() {
-
+        binding.contentGroup.visibility = View.INVISIBLE
+        binding.loadingBar.visibility = View.INVISIBLE
+        for (child in binding.errorView.root.children)
+            child.visibility = View.VISIBLE
     }
 
     companion object : FragmentInitializer<CoinDTO>
