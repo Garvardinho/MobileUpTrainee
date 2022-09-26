@@ -59,6 +59,8 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
     }
 
     override fun showDetails(details: CoinDetailsDTO) {
+        binding.contentGroup.visibility = View.VISIBLE
+        binding.loadingBar.visibility = View.INVISIBLE
         binding.toolbar.title.text = coin.name
         Picasso
             .get()
@@ -74,7 +76,8 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsView {
     }
 
     override fun showLoading() {
-
+        binding.contentGroup.visibility = View.INVISIBLE
+        binding.loadingBar.visibility = View.VISIBLE
     }
 
     override fun showError() {
