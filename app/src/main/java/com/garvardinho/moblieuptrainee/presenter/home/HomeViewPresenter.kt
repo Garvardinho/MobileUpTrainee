@@ -24,20 +24,28 @@ class HomeViewPresenter : MvpPresenter<HomeView>(), HomeViewDelegate {
         loadCoins("usd")
     }
 
-    override fun loadCoins(currency: String) {
-        viewState.showLoading()
+    override fun loadCoins(currency: String, isLoadingViewNeeded: Boolean) {
+        if (isLoadingViewNeeded)
+            viewState.showLoading()
+
         repository.loadCoins(currency)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ coins ->
                 if (coins.isEmpty()) {
-                    viewState.showError()
+                    if (isLoadingViewNeeded)
+                        viewState.showError()
+                    else
+                        viewState.showRefreshError()
                 } else {
                     homeCardViewPresenter.setCoins(coins, currency)
                     viewState.showCoins(coins)
                 }
             },
                 {
-                    viewState.showError()
+                    if (isLoadingViewNeeded)
+                        viewState.showError()
+                    else
+                        viewState.showRefreshError()
                 }
             )
     }
