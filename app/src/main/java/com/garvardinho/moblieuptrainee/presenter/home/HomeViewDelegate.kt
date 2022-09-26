@@ -1,8 +1,6 @@
 package com.garvardinho.moblieuptrainee.presenter.home
 
-import com.garvardinho.moblieuptrainee.presenter.ViewDelegate
-
-interface HomeViewDelegate : ViewDelegate {
+interface HomeViewDelegate {
 
     fun loadCoins(currency: String)
 }

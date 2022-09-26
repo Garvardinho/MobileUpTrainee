@@ -5,4 +5,6 @@
     <string name="eur">EUR</string>
     <string name="error_text">Случилась какая-то ошибка :(\nПопробуем снова?</string>
     <string name="try_again">Попробовать</string>
+    <string name="description_title">Описание</string>
+    <string name="categories_title">Категории</string>
 </resources>

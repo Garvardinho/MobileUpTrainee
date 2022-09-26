@@ -1,6 +1,7 @@
 package com.garvardinho.moblieuptrainee.model.repository
 
 import com.garvardinho.moblieuptrainee.model.retrofit.CoinDTO
+import com.garvardinho.moblieuptrainee.model.retrofit.CoinDetailsDTO
 import com.garvardinho.moblieuptrainee.model.retrofit.IRemoteDataSource
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
@@ -9,5 +10,9 @@ class Repository @Inject constructor(private val remoteDataSource: IRemoteDataSo
 
     override fun loadCoins(currency: String): Single<List<CoinDTO>> {
         return remoteDataSource.loadCoins(currency)
+    }
+
+    override fun loadDetails(id: String): Single<CoinDetailsDTO> {
+        return remoteDataSource.loadDetails(id)
     }
 }

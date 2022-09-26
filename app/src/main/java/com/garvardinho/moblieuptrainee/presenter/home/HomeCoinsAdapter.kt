@@ -1,8 +1,6 @@
 package com.garvardinho.moblieuptrainee.presenter.home
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.icu.number.NumberFormatter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -14,9 +12,11 @@ import com.garvardinho.moblieuptrainee.presenter.RecyclerViewPresenter
 import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.round
 
-class HomeCoinsAdapter(private val presenter: RecyclerViewPresenter<MobileUpCardView>) :
+class HomeCoinsAdapter @Inject constructor
+    (private val presenter: RecyclerViewPresenter<MobileUpCardView>) :
     RecyclerView.Adapter<HomeCoinsAdapter.ViewHolder>(), CoinsAdapter {
 
     private var onCoinClickListener: MobileUpItemClickListener? = null
@@ -43,6 +43,11 @@ class HomeCoinsAdapter(private val presenter: RecyclerViewPresenter<MobileUpCard
         RecyclerView.ViewHolder(cardView.root),
         MobileUpCardView {
 
+        init {
+            cardView.root.setOnClickListener {
+                onCoinClickListener?.setListener(it, adapterPosition)
+            }
+        }
         override var pos: Int = -1
 
         override fun setSymbol(symbol: String) {
@@ -90,5 +95,4 @@ class HomeCoinsAdapter(private val presenter: RecyclerViewPresenter<MobileUpCard
             }
         }
     }
-
 }
