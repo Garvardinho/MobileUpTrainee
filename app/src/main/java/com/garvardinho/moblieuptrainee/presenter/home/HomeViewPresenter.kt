@@ -2,6 +2,7 @@ package com.garvardinho.moblieuptrainee.presenter.home
 
 import com.garvardinho.moblieuptrainee.model.repository.IRepository
 import com.garvardinho.moblieuptrainee.view.home.HomeView
+import com.garvardinho.moblieuptrainee.view.screens.CiceroneScreens
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpPresenter
@@ -41,9 +42,7 @@ class HomeViewPresenter : MvpPresenter<HomeView>(), HomeViewDelegate {
             )
     }
 
-
-    override fun onBackPressed(): Boolean {
-        router.exit()
-        return true
+    fun onCoinClicked(position: Int) {
+        router.navigateTo(CiceroneScreens.detailsScreen(homeCardViewPresenter.getCoinAt(position)))
     }
 }

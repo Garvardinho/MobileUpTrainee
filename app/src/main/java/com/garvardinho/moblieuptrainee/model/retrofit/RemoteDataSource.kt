@@ -9,4 +9,8 @@ class RemoteDataSource @Inject constructor(private val coinAPI: CoinAPI) : IRemo
     override fun loadCoins(currency: String): Single<List<CoinDTO>> {
         return coinAPI.loadCoins(currency).subscribeOn(Schedulers.io())
     }
+
+    override fun loadDetails(id: String): Single<CoinDetailsDTO> {
+        return coinAPI.loadDetails(id).subscribeOn(Schedulers.io())
+    }
 }

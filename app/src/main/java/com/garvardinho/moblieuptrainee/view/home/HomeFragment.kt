@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,16 +15,10 @@ import com.garvardinho.moblieuptrainee.model.retrofit.CoinDTO
 import com.garvardinho.moblieuptrainee.presenter.home.HomeCoinsAdapter
 import com.garvardinho.moblieuptrainee.presenter.home.HomeViewPresenter
 import com.garvardinho.moblieuptrainee.presenter.home.MobileUpItemClickListener
-import com.garvardinho.moblieuptrainee.view.BackButtonListener
-import com.github.terrakok.cicerone.Router
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
-import javax.inject.Inject
 
-class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
-
-    @Inject
-    lateinit var router: Router
+class HomeFragment : MvpAppCompatFragment(), HomeView {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -44,7 +37,6 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         requireActivity().actionBar?.setDisplayHomeAsUpEnabled(false)
-        App.instance.appComponent.inject(this)
         return binding.root
     }
 
@@ -98,7 +90,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
 
         homeCoinsAdapter.setOnCoinClickListener(object : MobileUpItemClickListener {
             override fun setListener(v: View, position: Int) {
-                Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+                presenter.onCoinClicked(position)
             }
         })
     }
@@ -115,9 +107,5 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         binding.loadingBar.visibility = View.INVISIBLE
         for (child in binding.errorView.root.children)
             child.visibility = View.VISIBLE
-    }
-
-    override fun backPressed(): Boolean {
-        return presenter.onBackPressed()
     }
 }

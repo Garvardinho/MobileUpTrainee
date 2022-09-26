@@ -9,5 +9,4 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 interface HomeView : MobileUpView, MvpView {
 
     fun showCoins(coins: List<CoinDTO>)
-    fun showLoading()
 }

@@ -25,4 +25,6 @@ class HomeCardViewPresenter : RecyclerViewPresenter<MobileUpCardView> {
         this.coins.addAll(coins)
         this.currency = currency
     }
+
+    fun getCoinAt(position: Int): CoinDTO = coins[position]
 }

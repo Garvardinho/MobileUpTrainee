@@ -7,4 +7,5 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 interface MobileUpView : MvpView {
 
     fun showError()
+    fun showLoading()
 }
