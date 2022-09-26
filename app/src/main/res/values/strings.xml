@@ -3,4 +3,6 @@
     <string name="coin_list">Список криптовалют</string>
     <string name="usd">USD</string>
     <string name="eur">EUR</string>
+    <string name="error_text">Случилась какая-то ошибка :(\nПопробуем снова?</string>
+    <string name="try_again">Попробовать</string>
 </resources>

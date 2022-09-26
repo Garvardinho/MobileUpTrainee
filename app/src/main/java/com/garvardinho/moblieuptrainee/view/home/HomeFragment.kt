@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.garvardinho.moblieuptrainee.App
 import com.garvardinho.moblieuptrainee.R
@@ -51,6 +52,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
         super.onViewCreated(view, savedInstanceState)
         val chipUSD = binding.toolbar.usdChip
         val chipEUR = binding.toolbar.eurChip
+        var lastTappedIsUSD = true
 
         chipUSD.setOnClickListener {
             presenter.loadCoins("usd")
@@ -60,6 +62,7 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
             chipEUR.chipBackgroundColor =
                 ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.chip_unchecked))
             chipEUR.setTextColor(ContextCompat.getColor(requireContext(), R.color.chip_unchecked_text))
+            lastTappedIsUSD = true
         }
 
         chipEUR.setOnClickListener {
@@ -70,12 +73,25 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
             chipUSD.chipBackgroundColor =
                 ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.chip_unchecked))
             chipUSD.setTextColor(ContextCompat.getColor(requireContext(), R.color.chip_unchecked_text))
+            lastTappedIsUSD = false
+        }
+
+        binding.errorView.errorButton.setOnClickListener {
+            val currency: String =
+                if (lastTappedIsUSD)
+                    "usd"
+                else
+                    "eur"
+
+            presenter.loadCoins(currency)
         }
     }
 
     override fun showCoins(coins: List<CoinDTO>) {
         binding.coinList.visibility = View.VISIBLE
         binding.loadingBar.visibility = View.INVISIBLE
+        for (child in binding.errorView.root.children)
+            child.visibility = View.INVISIBLE
 
         binding.coinList.layoutManager = LinearLayoutManager(requireContext())
         binding.coinList.adapter = homeCoinsAdapter
@@ -90,9 +106,15 @@ class HomeFragment : MvpAppCompatFragment(), HomeView, BackButtonListener {
     override fun showLoading() {
         binding.coinList.visibility = View.INVISIBLE
         binding.loadingBar.visibility = View.VISIBLE
+        for (child in binding.errorView.root.children)
+            child.visibility = View.INVISIBLE
     }
 
     override fun showError() {
+        binding.coinList.visibility = View.INVISIBLE
+        binding.loadingBar.visibility = View.INVISIBLE
+        for (child in binding.errorView.root.children)
+            child.visibility = View.VISIBLE
     }
 
     override fun backPressed(): Boolean {

@@ -27,15 +27,20 @@ class HomeViewPresenter : MvpPresenter<HomeView>(), HomeViewDelegate {
         viewState.showLoading()
         repository.loadCoins(currency)
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { coins ->
+            .subscribe({ coins ->
                 if (coins.isEmpty()) {
                     viewState.showError()
                 } else {
                     homeCardViewPresenter.setCoins(coins, currency)
                     viewState.showCoins(coins)
                 }
-            }
+            },
+                {
+                    viewState.showError()
+                }
+            )
     }
+
 
     override fun onBackPressed(): Boolean {
         router.exit()
